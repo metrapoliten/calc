@@ -1,0 +1,178 @@
+import "DigitalDisplayRegular-ODEO.ttf";
+
+export global Logic {
+    callback button-pressed(string);
+}
+
+component Btn inherits Rectangle {
+    in-out property text <=> txt.text;
+
+    background: touch.pressed ? grey : touch.has-hover ? darkgray : black;
+    border-radius: root.height / 10;
+    txt := Text {
+        font-size: 2rem;
+        font-weight: 500;
+        color: white;
+    }
+
+    touch := TouchArea {
+        clicked => {
+            Logic.button-pressed(root.text);
+        }
+    }
+}
+
+component SpecialBtn inherits Btn {
+    background: touch.pressed ? lightpink : touch.has-hover ? pink : red;
+    touch := TouchArea {
+        clicked => {
+            Logic.button-pressed(root.text);
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    height: 300px;
+    width: 400px;
+    title: "calc";
+    always-on-top: false;
+    background: darkgray.darker(0.8);
+
+    in property <string> val;
+
+    forward-focus: my-key-handler;
+    my-key-handler := FocusScope {
+        key-pressed(event) => {
+            Logic.button-pressed(event.text);
+            if (event.text == Key.Return) {
+                Logic.button-pressed("=");
+            }
+            if (event.text == Key.Backspace) {
+                Logic.button-pressed("D");
+            }
+            if (event.text == Key.Escape) {
+                Logic.button-pressed("A");
+            }
+            accept
+        }
+    }
+
+    GridLayout {
+        padding: 5px;
+        spacing: 5px;
+        property <length> button_height: root.height / 6;
+        property <length> button_width: (root.width - 2 * self.padding - 4 * self.spacing) / 5;
+        Rectangle {
+            colspan: 5;
+            background: rgb(125, 140, 115);
+            Text {
+                width: parent.width;
+                wrap: word-wrap;
+                color: black;
+                font-family: "Digital Display";
+                font-size: 4rem;
+                horizontal-alignment: right;
+                text <=> val;
+                vertical-alignment: center;
+            }
+        }
+
+        Row {
+            Btn {
+                height: button_height;
+                width: button_width;
+                text: "7";
+            }
+
+            Btn {
+                width: button_width;
+                text: "8";
+            }
+
+            Btn {
+                width: button_width;
+                text: "9";
+            }
+
+            SpecialBtn {
+                width: button_width;
+                text: "DEL";
+            }
+
+            SpecialBtn {
+                width: button_width;
+                text: "AC";
+            }
+        }
+
+        Row {
+            Btn {
+                height: button_height;
+                text: "4";
+            }
+
+            Btn {
+                text: "5";
+            }
+
+            Btn {
+                text: "6";
+            }
+
+            Btn {
+                text: "×";
+            }
+
+            Btn {
+                text: "÷";
+            }
+        }
+
+        Row {
+            Btn {
+                height: button_height;
+                text: "1";
+            }
+
+            Btn {
+                text: "2";
+            }
+
+            Btn {
+                text: "3";
+            }
+
+            Btn {
+                text: "+";
+            }
+
+            Btn {
+                text: "—";
+            }
+        }
+
+        Row {
+
+            Btn {
+                height: button_height;
+                text: "0";
+            }
+
+            Btn {
+                text: ".";
+            }
+
+            Btn {
+                text: "=";
+            }
+
+            Btn {
+                text: "(−)";
+            }
+
+            Btn {
+                text: "√";
+            }
+        }
+    }
+}

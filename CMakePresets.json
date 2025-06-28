@@ -1,0 +1,60 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/cmake-build-debug/${presetName}",
+      "installDir": "${sourceDir}/cmake-build-debug/${presetName}",
+      "cacheVariables": {
+        "CMAKE_COMPILE_WARNING_AS_ERROR": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "l64",
+      "hidden": true,
+      "inherits": "base",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "l64-debug",
+      "displayName": "x64 Debug",
+      "inherits": "l64",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_FLAGS_INIT": "-stdlib=libc++ -Weverything -Wno-c++98-compat, -fsanitize=address,leak,memory,undefined",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "l64-release",
+      "displayName": "x64 Release",
+      "inherits": "l64",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_FLAGS_INIT": "-stdlib=libc++ -Weverything -Wno-c++98-compat",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "l64-debug",
+      "configurePreset": "l64-debug"
+    },
+    {
+      "name": "l64-release",
+      "configurePreset": "l64-release"
+    }
+  ]
+}
