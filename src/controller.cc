@@ -24,7 +24,4 @@ std::string Controller::handleBtn(char const input, std::string_view const val)
   return {};
 }
 
-void Controller::run()
-{
-  _view.run();
-}
+void Controller::run() { _view.run(); }
