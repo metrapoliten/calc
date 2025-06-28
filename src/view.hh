@@ -2,17 +2,18 @@
 
 #include <ui.h>
 
-#include "controller.hh"
-
 class View {
  public:
-  using String = slint::SharedString;
-  explicit View();
-  void run();
+  using String        = slint::SharedString;
+  using ButtonHandler = std::function<void(String)>;
+  using UiHandler     = slint::ComponentHandle<AppWindow>;
 
- private:
-  Controller _controller;
-  slint::ComponentHandle<AppWindow> _ui;
+  explicit View(ButtonHandler);
+  void run();
   String getValue();
   void setValue(String val);
+
+ private:
+  UiHandler _ui;
+  ButtonHandler _button_handler;
 };

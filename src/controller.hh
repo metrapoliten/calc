@@ -2,12 +2,15 @@
 #include <string_view>
 
 #include "model.hh"
+#include "view.hh"
 
 class Controller {
  public:
-  explicit Controller();
-  std::string processInput(char input, std::string_view val);
+  Controller();
+  std::string handleBtn(char input, std::string_view val);
+  void run();
 
  private:
   Model _model;
+  View _view;
 };

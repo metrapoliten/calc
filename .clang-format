@@ -17,9 +17,10 @@ AlignConsecutiveMacros:
   Enabled: true
 AllowShortEnumsOnASingleLine: false
 BreakBeforeBraces: Stroustrup
-BreakConstructorInitializers: AfterColon
+BreakConstructorInitializers: BeforeComma
 DerivePointerAlignment: false
 InsertBraces: true
 NamespaceIndentation: All
+PackConstructorInitializers: Never
 QualifierAlignment: Right
 Standard: Latest

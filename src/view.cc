@@ -2,17 +2,14 @@
 
 #include <ui.h>
 
-#include <cstdlib>
-
-View::View() : _controller{Controller()}, _ui{AppWindow::create()}
+View::View(ButtonHandler button_handler)
+    : _ui{AppWindow::create()}
+    , _button_handler{button_handler}
 {
-  _ui->global<Logic>().on_button_pressed([&](String const input) {
-    if (input.empty()) {
-      std::_Exit(1);
-    }
-    auto const* const ch = input.begin();
-    setValue(_controller.processInput(*ch, getValue()).data());
-  });
+  if (_button_handler) {
+    _ui->global<Logic>().on_button_pressed(
+        [this](slint::SharedString input) { _button_handler(input); });
+  }
 }
 
 void View::run() { _ui->run(); }

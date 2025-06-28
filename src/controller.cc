@@ -1,21 +1,30 @@
 #include "controller.hh"
 
-#include <cassert>
-#include <cctype>
 #include <string>
 #include <string_view>
 
 #include "model.hh"
 
-Controller::Controller() : _model{Model()} {}
-
-std::string Controller::processInput(char const input,
-                                     std::string_view const val)
+Controller::Controller()
+    : _model{Model()}
+    , _view{View([this](View::String const input) {
+      if (input.empty()) {
+        std::_Exit(1);
+      }
+      auto const* const ch = input.begin();
+      handleBtn(*ch, _view.getValue());
+    })}
 {
-  if (std::isdigit(static_cast<unsigned char>(input)) != 0) {
-    _model.processDigit();
-    return std::string{val} + input;
-  }
-  // _model.processSpecialBtn(char const input);
+}
+
+std::string Controller::handleBtn(char const input, std::string_view const val)
+{
+  auto res = _model.processBtn(input, val);
+  _view.setValue(res.data());
   return {};
+}
+
+void Controller::run()
+{
+  _view.run();
 }

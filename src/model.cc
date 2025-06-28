@@ -1,5 +1,8 @@
 #include "model.hh"
+
+#include <cctype>
 #include <cstdint>
+#include <string>
 
 namespace {
   enum class Operation : std::uint8_t {
@@ -17,11 +20,15 @@ namespace {
     AC    = 'A',
     DEL   = 'D'
   };
-} // namespace
 
-void Model::processDigit() {  }
+  void processDigit() {};
+}  // namespace
 
-void Model::processSpecialBtn([[maybe_unused]]char const input)
+std::string Model::processBtn(char const input, std::string_view const val)
 {
-  // switch (input)
+  if (std::isdigit(static_cast<unsigned char>(input)) != 0) {
+    processDigit();
+    return std::string{val} + input;
+  }
+  return {};
 }
