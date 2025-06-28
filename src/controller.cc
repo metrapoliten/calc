@@ -1,7 +1,7 @@
 #include "controller.hh"
 
 #include <cassert>
-#include <ranges>
+#include <cctype>
 #include <string>
 #include <string_view>
 
