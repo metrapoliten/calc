@@ -17,6 +17,6 @@ View::View() : _controller{Controller()}, _ui{AppWindow::create()}
 
 void View::run() { _ui->run(); }
 
-void View::setValue(View::String const val) { _ui->set_val(val); }
+void View::setValue(String const val) { _ui->set_val(val); }
 
-View::String View::getValue() { return _ui->get_val(); };
+View::String View::getValue() { return _ui->get_val(); }

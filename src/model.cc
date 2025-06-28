@@ -21,7 +21,7 @@ namespace {
 
 void Model::processDigit() {  }
 
-void Model::processSpecialBtn(char const input)
+void Model::processSpecialBtn([[maybe_unused]]char const input)
 {
   // switch (input)
 }

@@ -13,6 +13,6 @@ class View {
  private:
   Controller _controller;
   slint::ComponentHandle<AppWindow> _ui;
-  void setValue(String val);
   String getValue();
+  void setValue(String val);
 };

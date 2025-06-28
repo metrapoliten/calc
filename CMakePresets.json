@@ -5,9 +5,12 @@
       "name": "base",
       "hidden": true,
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/cmake-build-debug/${presetName}",
-      "installDir": "${sourceDir}/cmake-build-debug/${presetName}",
+      "binaryDir": "${sourceDir}/cmake-build/${presetName}",
+      "installDir": "${sourceDir}/cmake-build/${presetName}",
       "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "26",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
         "CMAKE_COMPILE_WARNING_AS_ERROR": "ON",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
@@ -32,7 +35,7 @@
       "inherits": "l64",
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_CXX_FLAGS_INIT": "-stdlib=libc++ -Weverything -Wno-c++98-compat, -fsanitize=address,leak,memory,undefined",
+        "CMAKE_CXX_FLAGS_INIT": "-stdlib=libc++ -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -fsanitize=address,undefined",
         "CMAKE_BUILD_TYPE": "Debug"
       }
     },
